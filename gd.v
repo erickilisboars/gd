@@ -1,10 +1,18 @@
 @[translated]
 module gd
 
-#flag -I@VMODROOT/include
-#flag -L@VMODROOT/lib
-#flag -lgd
-#include "gd.h"
+$if windows {
+    #flag -l gd
+    #include <gd.h>
+} $else {
+    $if $pkgconfig('gd') {
+        #pkgconfig gd
+        #include <gd.h>
+    } $else {
+        #flag -l gd
+        #include <gd.h>
+    }
+}
 
 //
 //  Group: Types
